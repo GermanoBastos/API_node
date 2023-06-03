@@ -87,7 +87,7 @@
 
       // Função para carregar os livros na tabela
       function carregarLivros() {
-        fetch('/livros')
+        fetch('https://api-node-germanobastos.vercel.app/livros/')
           .then(response => response.json())
           .then(data => {
             let html = '';
