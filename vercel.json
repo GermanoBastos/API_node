@@ -1,17 +1,16 @@
 {
-    "version": 1,
-    "builds":[
+  "name": "API_node",
+  "version": 2,
+  "public": true,
+  "build": {
+    "src": "index.html",
+    "use": "@vercel/node"
+  },
+  "routes":[
+    {"src":"/(.*)",
+    "dest":"index.html"
 
-        {"src":"./app.js",
-        "use":"@vercel/node"
-    }
-    ],
-    "routes":[
-        {
-            "src":"/(.*)",
-            "dest":"/"
-        }
-    ]
+}
 
-
+  ]
 }
