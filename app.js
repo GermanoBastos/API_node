@@ -1,4 +1,4 @@
-// const express = require("express") // importado o express
+é: // const express = require("express") // importado o express
 // const app = express() // atribuindo o app ao express
 // app.use(express.json())
 // const rotaLivro = require("./rotas/livro")
@@ -19,7 +19,7 @@
 // app.listen(port,()=>{
 // })
 
-const express = require('express');
+ express = require('express');
 const rotaLivro = require('./rotas/livro');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,7 +29,8 @@ app.use(express.json());
 app.use('/livros', rotaLivro);
 
 app.get('/', (req, res) => {
-  res.send("Bem-vindo");
+  res.sendFile(__dirname + '/index.html');
+
 });
 
 app.listen(port, () => {
