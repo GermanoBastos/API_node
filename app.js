@@ -1,5 +1,4 @@
 express = require("express");
-
 const cors = require("cors");
 const rotaLivro = require("./rotas/livro");
 const app = express();
