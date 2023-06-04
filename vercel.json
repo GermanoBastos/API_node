@@ -1,15 +1,29 @@
 {
-    "name": "API_node",
-    "version": 2,
-    "public": true,
-    "build": {
-      "src": "index.html",
+  "builds": [
+    {
+      "src": "app.js",
       "use": "@vercel/node"
-    },
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "index.html"
-      }
-    ]
-  }
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Origin, X-Requested-With, Content-Type, Accept"
+        }
+      ]
+    }
+  ]
+}
+
+
