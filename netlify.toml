@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/services/livros"
+  from = "/rotas/livros.js"
   to = "/livros.json"
   status = 200
   force = true
