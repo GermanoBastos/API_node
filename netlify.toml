@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/services/livros"
-  to = "livros.json"
+  to = "/livros.json"
   status = 200
   force = true
   headers = { Content-Type = "application/json" }
