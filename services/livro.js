@@ -1,63 +1,53 @@
-const fs = require("fs");
-const path = require("path");
+const axios = require('axios');
 
-function getTodosLivros() {
-  const filePath = path.join(__dirname, "../livros.json");
-  const dados = fs.readFileSync(filePath);
-  return JSON.parse(dados);
-}
+const baseUrl = 'https://jsserver.germanobastos1.repl.co';
 
-function getLivroPorId(id) {
-  const filePath = path.join(__dirname, "../livros.json");
-  const livros = JSON.parse(fs.readFileSync(filePath));
-  const livroFiltrado = livros.find((livro) => livro.id == id);
-  return livroFiltrado;
-}
-
-function getNextLivroId() {
-  const filePath = path.join(__dirname, "../livros.json");
-  const livros = JSON.parse(fs.readFileSync(filePath));
-  const lastLivro = livros[livros.length - 1];
-  return lastLivro ? lastLivro.id + 1 : 1;
-}
-
-function insereLivro(livroNovo) {
-  const filePath = path.join(__dirname, "../livros.json");
-  const livros = JSON.parse(fs.readFileSync(filePath));
-  const novoLivro = {
-    id: getNextLivroId(),
-    nome: livroNovo.nome,
-    autor: livroNovo.autor,
-    revenda: livroNovo.revenda,
-  };
-  const novaListaDeLivros = [...livros, novoLivro];
-
-  fs.writeFileSync(filePath, JSON.stringify(novaListaDeLivros));
-}
-
-function atualizaLivro(id, livroAtualizado) {
-  const filePath = path.join(__dirname, "../livros.json");
-  const livros = JSON.parse(fs.readFileSync(filePath));
-  const livroIndex = livros.findIndex((livro) => livro.id == id);
-
-  if (livroIndex !== -1) {
-    livros[livroIndex] = { ...livros[livroIndex], ...livroAtualizado };
-    fs.writeFileSync(filePath, JSON.stringify(livros));
-  } else {
-    throw new Error("Livro não encontrado");
+async function getTodosLivros() {
+  try {
+    const response = await axios.get(`${baseUrl}/dados`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erro ao obter todos os livros');
   }
 }
 
-function removeLivro(id) {
-  const filePath = path.join(__dirname, "../livros.json");
-  const livros = JSON.parse(fs.readFileSync(filePath));
-  const livroIndex = livros.findIndex((livro) => livro.id == id);
+async function getLivroPorId(id) {
+  try {
+    const response = await axios.get(`${baseUrl}/dados/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Erro ao obter o livro com o ID ${id}`);
+  }
+}
 
-  if (livroIndex !== -1) {
-    livros.splice(livroIndex, 1);
-    fs.writeFileSync(filePath, JSON.stringify(livros));
-  } else {
-    throw new Error("Livro não encontrado");
+async function insereLivro(livroNovo) {
+  try {
+    const response = await axios.post(`${baseUrl}/dados`, livroNovo);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erro ao inserir o livro');
+  }
+}
+
+async function atualizaLivro(id, livroAtualizado) {
+  try {
+    const response = await axios.put(`${baseUrl}/dados/${id}`, livroAtualizado);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Erro ao atualizar o livro com o ID ${id}`);
+  }
+}
+
+async function removeLivro(id) {
+  try {
+    await axios.delete(`${baseUrl}/dados/${id}`);
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Erro ao remover o livro com o ID ${id}`);
   }
 }
 
