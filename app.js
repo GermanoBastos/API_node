@@ -11,6 +11,9 @@ app.use("/livros", rotaLivro);
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+app.get("/documentacao", (req, res) => {
+  res.sendFile(__dirname + "/document.html");
+});
 
 
 
